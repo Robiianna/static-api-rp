@@ -45,7 +45,7 @@ def sitemap():
 @app.route('/members', methods=['GET'])
 def handle_hello():
     members = jackson_family.get_all_members()
-    
+    # members = json.loads(request.data)
     return jsonify(members),200
 
 
@@ -63,7 +63,18 @@ def add():
         "lucky_numbers": lucky_numbers 
     }
     jackson_family.add_member(new_member)
-    return jsonify(first_name)
+    return jsonify(first_name),200
+
+@app.route('/member/<int:member_id>', methods=['GET', 'DELETE'])
+def get_jackson(member_id):
+    if request.method == "GET":
+        member = jackson_family.get_member(member_id)
+        return jsonify(member),200
+    else:
+        member = jackson_family.delete_member(member_id)
+        return jsonify(member,{
+            "done": True
+        }),200
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
