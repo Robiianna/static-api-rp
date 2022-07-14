@@ -56,7 +56,7 @@ def add():
     age = request.json.get("age")
     lucky_numbers = request.json.get("lucky_numbers")
     new_member = {
-        "id": 0,
+        "id": id,
         "first_name": first_name,
         "last_name": "Jackson",
         "age": age,
@@ -72,7 +72,7 @@ def get_jackson(member_id):
         return jsonify(member),200
     else:
         member = jackson_family.delete_member(member_id)
-        return jsonify(member,{
+        return jsonify({
             "done": True
         }),200
 
